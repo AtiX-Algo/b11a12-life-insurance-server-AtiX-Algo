@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Helvetica, Arial, sans-serif; color: #333; }
+        .container { width: 80%; margin: auto; padding: 30px; border: 1px solid #eee; }
+        h1 { color: #0052CC; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .details-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .details-table td { padding: 10px; border: 1px solid #ddd; }
+        .details-table .label { font-weight: bold; width: 30%; }
+        .footer { text-align: center; margin-top: 50px; font-size: 12px; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Aegis Life - Insurance Policy Document</h1>
+        </div>
+        <h2>Policy Holder Details</h2>
+        <table class="details-table">
+            <tr>
+                <td class="label">Name</td>
+                <td>{{applicantName}}</td>
+            </tr>
+            <tr>
+                <td class="label">Email</td>
+                <td>{{applicantEmail}}</td>
+            </tr>
+        </table>
+
+        <h2 style="margin-top: 40px;">Policy Details</h2>
+        <table class="details-table">
+            <tr>
+                <td class="label">Policy Title</td>
+                <td>{{policyTitle}}</td>
+            </tr>
+            <tr>
+                <td class="label">Coverage Amount</td>
+                <td>{{coverageAmount}}</td>
+            </tr>
+             <tr>
+                <td class="label">Submission Date</td>
+                <td>{{submissionDate}}</td>
+            </tr>
+        </table>
+
+        <div class="footer">
+            <p>Aegis Life Insurance Platform | Secure Your Tomorrow Today</p>
+            <p>Generated on: {{generationDate}}</p>
+        </div>
+    </div>
+</body>
+</html>
