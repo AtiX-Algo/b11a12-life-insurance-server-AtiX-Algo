@@ -5,14 +5,19 @@ const applicationSchema = new Schema({
     applicantName: { type: String, required: true },
     applicantEmail: { type: String, required: true },
     applicantAddress: { type: String, required: true },
-    applicantAddress: { type: String, required: true },
-    nidNumber: { type: String, required: true }, // <-- ADD THIS
-    nomineeName: { type: String, required: true }, // <-- ADD THIS
-    nomineeRelationship: { type: String, required: true }, // <-- ADD THIS
-    healthInfo: { type: String }, // <-- ADD THIS
+    nidNumber: { type: String, required: true },
+    phoneNumber: { type: String, required: true },    
+    dateOfBirth: { type: Date, required: true },
+    nomineeName: { type: String, required: true },
+    nomineeRelationship: { type: String, required: true },
+    nomineeContact: { type: String, required: true },
+    healthDeclaration: { type: Boolean, required: true },
+    termsAccepted: { type: Boolean, required: true },
+    healthInfo: { type: String },
     policyId: { type: Schema.Types.ObjectId, ref: 'Policy', required: true },
     policyTitle: { type: String, required: true },
     coverageAmount: { type: String, required: true },
+    estimatedPremium: { type: String },
     agentId: { type: Schema.Types.ObjectId, ref: 'User', default: null },
     agentName: { type: String, default: 'Unassigned' },
     status: {
@@ -20,12 +25,12 @@ const applicationSchema = new Schema({
         enum: ['Pending', 'Approved', 'Rejected'],
         default: 'Pending'
     },
-    claimStatus: {  // <-- Added field
+    claimStatus: {  
         type: String,
         enum: ['None', 'Pending', 'Approved'],
         default: 'None'
     },
-    claimDetails: { // <-- Added field
+    claimDetails: { 
         type: String,
         default: ''
     },
@@ -33,7 +38,7 @@ const applicationSchema = new Schema({
         type: String,
         default: ''
     },
-    documentUrl: { // <-- ADD THIS
+    documentUrl: { 
         type: String,
         default: ''
     },

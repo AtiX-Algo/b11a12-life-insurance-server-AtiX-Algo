@@ -599,6 +599,66 @@ app.patch('/applications/claims/approve/:id', verifyToken, verifyAgent, async (r
     }
 });
 
+// GET all applications for a specific customer by email
+app.get('/applications/customer/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const applications = await Application.find({ applicantEmail: email });
+    
+    if (!applications) {
+      return res.status(404).send({ message: 'No applications found for this user.' });
+    }
+    
+    res.send(applications);
+  } catch (error) {
+    console.error('Error fetching customer applications:', error);
+    res.status(500).send({ message: 'Internal Server Error' });
+  }
+});
+
+
+
+
+
+app.get('/admin-stats', async (req, res) => {
+    try {
+        const totalUsers = await User.countDocuments();
+        const pendingApplications = await Application.countDocuments({ status: 'Pending' });
+        const totalPolicies = await Policy.countDocuments();
+
+        // --- FIX: Use the 'Payment' model instead of 'Transaction' ---
+        const revenueAggregation = await Payment.aggregate([
+            { $match: { status: 'success' } }, // Only count successful transactions
+            { $group: { _id: null, total: { $sum: '$amount' } } }
+        ]);
+        const totalRevenue = revenueAggregation.length > 0 ? revenueAggregation[0].total : 0;
+
+        res.send({
+            totalUsers,
+            pendingApplications,
+            totalPolicies,
+            totalRevenue
+        });
+    } catch (error) {
+        console.error("Error fetching admin stats:", error);
+        res.status(500).send({ message: "Failed to fetch admin statistics" });
+    }
+});
+
+
+app.get('/applications/recent', async (req, res) => {
+    try {
+        const recentApplications = await Application.find({})
+            .sort({ submissionDate: -1 }) // Sort by newest first
+            .limit(5); // Get only the top 5
+        res.send(recentApplications);
+    } catch (error) {
+        console.error("Error fetching recent applications:", error);
+        res.status(500).send({ message: "Failed to fetch recent applications" });
+    }
+});
+
+
 // GET a user's role by email
 app.get('/users/role/:email', verifyToken, async (req, res) => {
     const email = req.params.email;
